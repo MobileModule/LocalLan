@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/easy_photos_bar_primary">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        app:srcCompat="@drawable/ic_arrow_back_easy_photos" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/iv_back"
+        android:gravity="center"
+        android:text="@string/picture_selection_easy_photos"
+        android:textColor="@color/easy_photos_fg_primary"
+        android:visibility="visible" />
+
+    <com.huantansheng.easyphotos.ui.widget.PressedTextView
+        android:id="@+id/tv_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/bg_menu_done_easy_photos"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textColor="@color/menu_text_easy_photos"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+</RelativeLayout>

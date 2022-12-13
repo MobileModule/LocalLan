@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/easy_photos_bar_primary">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.huantansheng.easyphotos.ui.widget.PressedTextView
+            android:id="@+id/tv_album_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingLeft="16dp"
+            android:paddingEnd="6dp"
+            android:paddingRight="6dp"
+            android:text="@string/selector_folder_all_easy_photos"
+            android:textColor="@color/easy_photos_fg_primary"
+            android:textSize="16sp" />
+
+        <com.huantansheng.easyphotos.ui.widget.PressedImageView
+            android:id="@+id/iv_album_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:srcCompat="@drawable/ic_album_items_name_easy_photos" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_second_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="13dp"
+        app:srcCompat="@drawable/ic_edit_easy_photos" />
+
+    <com.huantansheng.easyphotos.ui.widget.PressedTextView
+        android:id="@+id/tv_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"
+        android:textSize="16sp"
+        android:text="@string/selector_preview_easy_photos"
+        android:textColor="@color/easy_photos_fg_primary"
+        android:visibility="invisible" />
+
+</RelativeLayout>
