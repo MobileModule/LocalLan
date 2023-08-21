@@ -190,21 +190,31 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         albumModel.query(this, albumModelCallBack);
     }
 
+    //READ_MEDIA_IMAGES
     protected String[] getNeedPermissions() {
-        if (Setting.isShowCamera) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            if (Setting.isShowCamera) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    return new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE};
+                }
                 return new String[]{Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE};
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE};
+                }
+                return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
             }
-            return new String[]{Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE};
+        }else {
+            if (Setting.isShowCamera) {
+                return new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.READ_MEDIA_IMAGES};
+            }else {
+                return new String[]{Manifest.permission.READ_MEDIA_IMAGES};
             }
-            return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         }
     }
 

@@ -24,8 +24,12 @@ public class DurationUtils {
         } catch (Exception e) {
 //            e.printStackTrace();
         } finally {
-            if (mmr != null) {
-                mmr.release();
+            try {
+                if (mmr != null) {
+                    mmr.release();
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
             }
         }
         return 0;
