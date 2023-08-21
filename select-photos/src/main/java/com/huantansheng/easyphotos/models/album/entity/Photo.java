@@ -27,7 +27,7 @@ public class Photo implements Parcelable {
     public boolean selectedOriginal;//用户选择时是否选择了原图选项
     public String compressPath = "";//压缩路径
     public String id = System.currentTimeMillis() + "-" + new Random().nextInt(1000);
-
+    public String id_server = "";
     public Photo(String name, Uri uri, String path, long time, int width, int height, long size, long duration, String type) {
         this.name = name;
         this.uri = uri;
