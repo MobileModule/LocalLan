@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
+//apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion androidVersions.compileSdkVersion
@@ -29,15 +29,27 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation project(path: ':locallan')
 }
+//
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.select.photos'
+//                artifactId = 'selectphotos'
+//                version = '1.0.1'
+//            }
+//        }
+//    }
+//}
 
-afterEvaluate {
+
+if (rootProject.file('gradle/publish-module.gradle').exists()) {
+    apply from: rootProject.file('gradle/publish-module.gradle')
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
-                groupId = 'com.select.photos'
                 artifactId = 'selectphotos'
-                version = '1.0.1'
             }
         }
     }
