@@ -192,7 +192,16 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
     //READ_MEDIA_IMAGES
     protected String[] getNeedPermissions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (Setting.isShowCamera) {
+                return new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED};
+            } else {
+                return new String[]{Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED};
+            }
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             if (Setting.isShowCamera) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     return new String[]{Manifest.permission.CAMERA,
@@ -208,11 +217,11 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
                 }
                 return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
             }
-        }else {
+        } else {
             if (Setting.isShowCamera) {
                 return new String[]{Manifest.permission.CAMERA,
                         Manifest.permission.READ_MEDIA_IMAGES};
-            }else {
+            } else {
                 return new String[]{Manifest.permission.READ_MEDIA_IMAGES};
             }
         }
@@ -294,27 +303,27 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private void toAndroidCamera(int requestCode) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                photoUri = createImageUri();
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                startActivityForResult(cameraIntent, requestCode);
-                return;
-            }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            photoUri = createImageUri();
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            startActivityForResult(cameraIntent, requestCode);
+            return;
+        }
 
-            createCameraTempImageFile();
-            if (mTempImageFile != null && mTempImageFile.exists()) {
+        createCameraTempImageFile();
+        if (mTempImageFile != null && mTempImageFile.exists()) {
 
-                Uri imageUri = UriUtils.getUri(this, mTempImageFile);
+            Uri imageUri = UriUtils.getUri(this, mTempImageFile);
 
-                cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //对目标应用临时授权该Uri所代表的文件
+            cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //对目标应用临时授权该Uri所代表的文件
 
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//将拍取的照片保存到指定URI
-                startActivityForResult(cameraIntent, requestCode);
-            } else {
-                Toast.makeText(this, R.string.camera_temp_file_error_easy_photos,
-                        Toast.LENGTH_SHORT).show();
-            }
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//将拍取的照片保存到指定URI
+            startActivityForResult(cameraIntent, requestCode);
+        } else {
+            Toast.makeText(this, R.string.camera_temp_file_error_easy_photos,
+                    Toast.LENGTH_SHORT).show();
+        }
 //        }
 //        else {
 //            Toast.makeText(this, R.string.msg_no_camera_easy_photos, Toast.LENGTH_SHORT).show();

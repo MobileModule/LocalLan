@@ -1,7 +1,10 @@
 package com.huantansheng.easyphotos.utils.permission;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
@@ -31,7 +34,7 @@ public class PermissionUtil {
         boolean isHas = true;
         List<String> permissions = new ArrayList<>();
         for (String checkPermission : checkPermissions) {
-            if (PermissionChecker.checkSelfPermission(cxt, checkPermission) != PackageManager.PERMISSION_GRANTED) {
+            if (PermissionChecker.checkSelfPermission(cxt, checkPermission) != PermissionChecker.PERMISSION_GRANTED) {
                 isHas = false;
                 permissions.add(checkPermission);
             }
@@ -51,9 +54,41 @@ public class PermissionUtil {
         int length = grantResults.length;
         List<Integer> positions = new ArrayList<>();
         if (length > 0) {
-            for (int i = 0; i < length; i++) {
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    positions.add(i);
+            //READ_MEDIA_IMAGES,READ_MEDIA_VISUAL_USER_SELECTED有一个权限即可
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                int mediaImageIndex = -1;
+                int visualUserSelectedIndex = -1;
+                for (int i = 0; i < permissions.length; i++) {
+                    if (permissions[i].equals(Manifest.permission.READ_MEDIA_IMAGES)) {
+                        mediaImageIndex = i;
+                    }
+                    if (permissions[i].equals(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)) {
+                        visualUserSelectedIndex = i;
+                    }
+                }
+                if (mediaImageIndex != -1 && visualUserSelectedIndex != -1) {
+                    if (grantResults[mediaImageIndex] == PackageManager.PERMISSION_GRANTED ||
+                            grantResults[visualUserSelectedIndex] == PackageManager.PERMISSION_GRANTED) {
+                        for (int i = 0; i < length; i++) {
+                            if (i != mediaImageIndex || i != visualUserSelectedIndex) {
+                                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                                    positions.add(i);
+                                }
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < length; i++) {
+                            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                                positions.add(i);
+                            }
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        positions.add(i);
+                    }
                 }
             }
         }
