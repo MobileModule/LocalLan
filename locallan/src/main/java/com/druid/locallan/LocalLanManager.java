@@ -13,7 +13,14 @@ import java.util.Locale;
 public class LocalLanManager {
     private static final String TAG = LocalLanManager.class.getName();
     public static final String SIMPLIFIED_CHINESE = "zh";
+    public static final String TRADITIONAL_CHINESE = "tw";
+    public static final String KOREAN = "ko";
     public static final String ENGLISH = "en";
+
+    public static final String JAPAN = "ja";
+
+    public static final String FRENCH = "fr";
+    public static final String ESPANA = "es";
 
     public static void saveSP(Context context, String table, String key, Object value) {
         SharedSave sharedSave = new SharedSave(context, table);
@@ -46,9 +53,48 @@ public class LocalLanManager {
         return true;
     }
 
+    static int getLanguageType(Context context) {
+        return (int) getSP(context, SharedTable.GONDAR_SETTING, SharedTable.GONDAR_SETTING_TB.LANGUAGE, 0);
+    }
+
     public static boolean isChinese(Context context) {
-        int language = (int) getSP(context, SharedTable.GONDAR_SETTING, SharedTable.GONDAR_SETTING_TB.LANGUAGE, 0);
+        int language = getLanguageType(context);
         if (language == 0)
+            return true;
+        return false;
+    }
+
+    public static boolean isKorean(Context context) {
+        int language = getLanguageType(context);
+        if (language == 2)
+            return true;
+        return false;
+    }
+
+    public static boolean isJapan(Context context) {
+        int language = getLanguageType(context);
+        if (language == 3)
+            return true;
+        return false;
+    }
+
+    public static boolean isFrench(Context context) {
+        int language = getLanguageType(context);
+        if (language == 4)
+            return true;
+        return false;
+    }
+
+    public static boolean isSpain(Context context) {
+        int language = getLanguageType(context);
+        if (language == 5)
+            return true;
+        return false;
+    }
+
+    public static boolean isChinaTW(Context context) {
+        int language = getLanguageType(context);
+        if (language == 6)
             return true;
         return false;
     }
@@ -90,10 +136,35 @@ public class LocalLanManager {
 
     public static String getLanguageStr(Context context) {
         boolean isCN = isChinese(context);
+        boolean isKorean = isKorean(context);
+        boolean isJapan = isJapan(context);
+        boolean isFrench = isFrench(context);
+        boolean isSpain = isSpain(context);
+        boolean isChinaTW = isChinaTW(context);
         if (isCN) {
             return SIMPLIFIED_CHINESE.toUpperCase();
         } else {
-            return ENGLISH.toUpperCase();
+            if (isKorean) {
+                return KOREAN.toUpperCase();
+            } else {
+                if (isJapan) {
+                    return JAPAN.toUpperCase();
+                } else {
+                    if (isFrench) {
+                        return FRENCH.toUpperCase();
+                    } else {
+                        if (isSpain) {
+                            return ESPANA.toUpperCase();
+                        } else {
+                            if (isChinaTW) {
+                                return TRADITIONAL_CHINESE.toUpperCase();
+                            } else {
+                                return ENGLISH.toUpperCase();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -134,9 +205,25 @@ public class LocalLanManager {
         resources.updateConfiguration(configuration, dm);
     }
 
+
     public static Locale getLocaleByLanguage(String language) {
         if (language.equals(SIMPLIFIED_CHINESE.toUpperCase())) {
             return Locale.SIMPLIFIED_CHINESE;
+        }
+        if (language.equals(TRADITIONAL_CHINESE.toUpperCase())) {
+            return Locale.TRADITIONAL_CHINESE;
+        }
+        if (language.equals(KOREAN.toUpperCase())) {
+            return Locale.KOREAN;
+        }
+        if (language.equals(JAPAN.toUpperCase())) {
+            return Locale.JAPAN;
+        }
+        if (language.equals(FRENCH.toUpperCase())) {
+            return Locale.FRENCH;
+        }
+        if (language.equals(ESPANA.toUpperCase())) {
+            return new Locale("es");
         }
         return Locale.ENGLISH;
     }
