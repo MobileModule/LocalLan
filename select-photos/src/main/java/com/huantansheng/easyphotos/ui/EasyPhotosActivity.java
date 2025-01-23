@@ -10,6 +10,8 @@ import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -110,6 +112,8 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     private RelativeLayout permissionView;
     private TextView tvPermission;
     private View mBottomBar;
+    private View ll_permission_visual_select;
+    private TextView tv_visual_select;
 
     public static void start(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, EasyPhotosActivity.class);
@@ -137,7 +141,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
             return;
         }
         initSomeViews();
-        if (PermissionUtil.checkAndRequestPermissionsInActivity(this, getNeedPermissions())) {
+        if (PermissionUtil.checkPhotoPermissionsInActivity(this, Setting.isShowCamera, false, true)) {
             hasPermissions();
         } else {
             permissionView.setVisibility(View.VISIBLE);
@@ -156,9 +160,28 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
     }
 
+    public static final String getAppName(Context context) {
+        PackageManager packageManager = null;
+        ApplicationInfo applicationInfo = null;
+        try {
+            packageManager = context.getApplicationContext().getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            applicationInfo = null;
+        }
+        String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
+        return applicationName;
+    }
+
     private void initSomeViews() {
+        ll_permission_visual_select = findViewById(R.id.ll_permission_visual_select);
+        ll_permission_visual_select.setOnClickListener(this);
+        tv_visual_select = findViewById(R.id.tv_visual_select);
+        tv_visual_select.setText(String.format(getString(R.string.photo_visual_select_tip), getAppName(this)));
         mBottomBar = findViewById(R.id.m_bottom_bar);
         permissionView = findViewById(R.id.rl_permissions_view);
+        permissionView.setOnClickListener(this);
         tvPermission = findViewById(R.id.tv_permission);
         rootViewAlbumItems = findViewById(R.id.root_view_album_items);
         tvTitle = findViewById(R.id.tv_title);
@@ -170,6 +193,11 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     }
 
     private void hasPermissions() {
+        if (PermissionUtil.checkPhotoVisualSelectedPermissionsViewInActivity(this)) {
+            ll_permission_visual_select.setVisibility(View.VISIBLE);
+        } else {
+            ll_permission_visual_select.setVisibility(View.GONE);
+        }
         permissionView.setVisibility(View.GONE);
         if (Setting.onlyStartCamera) {
             launchCamera(Code.REQUEST_CAMERA);
@@ -227,6 +255,14 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         }
     }
 
+    protected String[] getSelectedPhotoPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            return new String[]{
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED};
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions,
@@ -246,7 +282,7 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
                         permissionView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (PermissionUtil.checkAndRequestPermissionsInActivity(EasyPhotosActivity.this, getNeedPermissions())) {
+                                if (PermissionUtil.checkPhotoVisualSelectedPermissionsViewInActivity(EasyPhotosActivity.this)) {
                                     hasPermissions();
                                 }
                             }
@@ -302,7 +338,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
     private void toAndroidCamera(int requestCode) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
             photoUri = createImageUri();
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -313,21 +348,14 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
 
         createCameraTempImageFile();
         if (mTempImageFile != null && mTempImageFile.exists()) {
-
             Uri imageUri = UriUtils.getUri(this, mTempImageFile);
-
             cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //对目标应用临时授权该Uri所代表的文件
-
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//将拍取的照片保存到指定URI
             startActivityForResult(cameraIntent, requestCode);
         } else {
             Toast.makeText(this, R.string.camera_temp_file_error_easy_photos,
                     Toast.LENGTH_SHORT).show();
         }
-//        }
-//        else {
-//            Toast.makeText(this, R.string.msg_no_camera_easy_photos, Toast.LENGTH_SHORT).show();
-//        }
     }
 
 
@@ -384,10 +412,16 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Code.REQUEST_SETTING_APP_DETAILS) {
-            if (PermissionUtil.checkAndRequestPermissionsInActivity(this, getNeedPermissions())) {
-                hasPermissions();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (PermissionUtil.checkPhotoVisualSelectedPermissionsViewInActivity(this)) {
+                    hasPermissions();
+                } else {
+                    permissionView.setVisibility(View.VISIBLE);
+                }
             } else {
-                permissionView.setVisibility(View.VISIBLE);
+                if (PermissionUtil.checkPhotoPermissionsInActivity(this, Setting.isShowCamera, true, false)) {
+                    hasPermissions();
+                }
             }
             return;
         }
@@ -592,7 +626,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     }
 
     private void initView() {
-
         if (albumModel.getAlbumItems().isEmpty()) {
             Toast.makeText(this, R.string.no_photos_easy_photos, Toast.LENGTH_LONG).show();
             if (Setting.isShowCamera) launchCamera(Code.REQUEST_CAMERA);
@@ -669,7 +702,6 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
     }
 
     private void initAlbumItems() {
-
         rvAlbumItems = findViewById(R.id.rv_album_items);
         albumItemList.clear();
         albumItemList.addAll(albumModel.getAlbumItems());
@@ -723,6 +755,13 @@ public class EasyPhotosActivity extends AppCompatActivity implements AlbumItemsA
         } else if (R.id.tv_puzzle == id) {
             processSecondMenu();
             PuzzleSelectorActivity.start(this);
+        } else if (R.id.ll_permission_visual_select == id) {
+            //todo
+            if (PermissionUtil.checkPhotoVisualSelectedPermissionsViewInActivity(this)) {
+                PermissionUtil.checkPhotoPermissionsInActivity(this, Setting.isShowCamera, true, true);
+            }
+        } else if (R.id.rl_permissions_view == id) {
+
         }
     }
 

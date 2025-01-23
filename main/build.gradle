@@ -3,8 +3,8 @@ plugins {
 }
 
 android {
+    namespace 'com.druid.main'
     compileSdkVersion androidVersions.compileSdkVersion
-    buildToolsVersion androidVersions.buildToolsVersion
 
     defaultConfig {
         applicationId "com.druid.main"
@@ -39,6 +39,11 @@ android {
     lintOptions {
         abortOnError false
         checkReleaseBuilds false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

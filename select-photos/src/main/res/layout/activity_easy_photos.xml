@@ -41,11 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/easy_photos_bar_primary_translation"
-            android:paddingStart="8dp"
-            android:paddingLeft="8dp"
-            android:paddingTop="50dp"
-            android:paddingEnd="8dp"
-            android:paddingRight="8dp"
+            android:paddingTop="80dp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/m_bottom_bar"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -58,7 +54,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/bg_dialog_album_items_background_easy_photos"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:overScrollMode="never"/>
         </RelativeLayout>
 
         <LinearLayout

@@ -4,7 +4,6 @@ apply plugin: 'com.android.library'
 android {
     namespace 'com.druid.locallan'
     compileSdkVersion androidVersions.compileSdkVersion
-    buildToolsVersion androidVersions.buildToolsVersion
 
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion

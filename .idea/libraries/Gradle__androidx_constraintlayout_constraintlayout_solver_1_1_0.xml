@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.constraintlayout:constraintlayout-solver:1.1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="androidx.constraintlayout" artifactId="constraintlayout-solver" version="1.1.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../GradleCache/caches/modules-2/files-2.1/androidx.constraintlayout/constraintlayout-solver/1.1.0/90837bbae018cb1de85527c798c8762063ab8ffa/constraintlayout-solver-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

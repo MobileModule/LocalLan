@@ -4,7 +4,6 @@ apply plugin: 'com.android.library'
 android {
     namespace 'com.huantansheng.easyphotos'
     compileSdkVersion androidVersions.compileSdkVersion
-    buildToolsVersion androidVersions.buildToolsVersion
 
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
@@ -29,6 +28,8 @@ dependencies {
     implementation dependenciesList.ScaleImageView
     implementation dependenciesList.PhotoView
     implementation project(path: ':locallan')
+    //
+    implementation dependenciesList.StyleTheme
 }
 //
 //afterEvaluate {

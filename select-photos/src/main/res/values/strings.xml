@@ -67,6 +67,7 @@
     <string name="gif_easy_photos">GIF</string>
 
     <string name="video_easy_photos">Video</string>
+    <string name="photo_visual_select_tip">You have set %s to only access some of the photos in the album. It is recommended to set it to access all photos</string>
 
 
 </resources>

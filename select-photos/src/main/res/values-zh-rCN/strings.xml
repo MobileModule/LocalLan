@@ -67,6 +67,7 @@
     <string name="gif_easy_photos">动图</string>
 
     <string name="video_easy_photos">视频</string>
+    <string name="photo_visual_select_tip">你已设置%s只能访问相册部分照片，建议设置访问所有照片</string>
 
 
 </resources>

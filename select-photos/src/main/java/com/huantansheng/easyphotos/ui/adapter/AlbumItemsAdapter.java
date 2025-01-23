@@ -66,9 +66,9 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
                 padding = ((AlbumItemsViewHolder) holder).mRoot.getPaddingLeft();
             }
             if (p == getItemCount() - 1) {
-                ((AlbumItemsViewHolder) holder).mRoot.setPadding(padding, padding, padding, padding);
+                ((AlbumItemsViewHolder) holder).mRoot.setPadding(padding, padding/5, padding, padding/5        );
             } else {
-                ((AlbumItemsViewHolder) holder).mRoot.setPadding(padding, padding, padding, 0);
+                ((AlbumItemsViewHolder) holder).mRoot.setPadding(padding, padding/5, padding, 0);
             }
             AlbumItem item = (AlbumItem) dataList.get(p);
             Setting.imageEngine.loadPhoto(((AlbumItemsViewHolder) holder).ivAlbumCover.getContext(), item.coverImageUri, ((AlbumItemsViewHolder) holder).ivAlbumCover);

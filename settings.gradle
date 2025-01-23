@@ -1,3 +1,4 @@
+rootProject.name = "LocalLan"
 include 'select-photos'
 include 'locallan'
 include 'main'

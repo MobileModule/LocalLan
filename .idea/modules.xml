@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LocalLan.iml" filepath="$PROJECT_DIR$/.idea/modules/LocalLan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.iml" filepath="$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.main.iml" filepath="$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/locallan/LocalLan.locallan.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/LocalLan.main.iml" filepath="$PROJECT_DIR$/.idea/modules/main/LocalLan.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/LocalLan.main.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/main/LocalLan.main.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/LocalLan.main.main.iml" filepath="$PROJECT_DIR$/.idea/modules/main/LocalLan.main.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/LocalLan.main.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/main/LocalLan.main.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.iml" filepath="$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.main.iml" filepath="$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/select-photos/LocalLan.select-photos.unitTest.iml" />
+    </modules>
+  </component>
+</project>

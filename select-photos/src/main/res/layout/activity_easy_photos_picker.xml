@@ -24,7 +24,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photos"
             android:layout_width="0dp"
@@ -35,17 +34,12 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/m_tool_bar_bottom_line" />
 
-
         <RelativeLayout
             android:id="@+id/root_view_album_items"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/easy_photos_bar_primary_translation"
-            android:paddingStart="8dp"
-            android:paddingLeft="8dp"
-            android:paddingTop="50dp"
-            android:paddingEnd="8dp"
-            android:paddingRight="8dp"
+            android:paddingTop="80dp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/m_bottom_bar"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -53,12 +47,14 @@
             app:layout_constraintTop_toBottomOf="@+id/m_tool_bar">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="10dp"
                 android:id="@+id/rv_album_items"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/bg_dialog_album_items_background_easy_photos"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:overScrollMode="never"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -118,6 +114,39 @@
                 android:padding="8dp"
                 android:text="@string/empty_easy_photos"
                 android:textColor="@color/easy_photos_fg_primary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_permission_visual_select"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:background="@color/easy_photos_bar_primary"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="6dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="6dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/m_bottom_bar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_sys_warning" />
+
+            <TextView
+                android:id="@+id/tv_visual_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/photo_visual_select_tip"
+                android:textColor="@color/easy_photos_fg_primary"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <View
@@ -252,6 +281,7 @@
             android:layout_height="0dp"
             android:background="@color/easy_photos_fg_primary"
             android:visibility="gone"
+            tools:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -263,7 +293,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:textColor="@color/easy_photos_fg_accent"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="@string/permissions_again_easy_photos"/>
 
             <ImageView
                 android:layout_width="32dp"
